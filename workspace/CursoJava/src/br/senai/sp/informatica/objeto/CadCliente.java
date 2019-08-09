@@ -5,7 +5,7 @@ public class CadCliente {
 		Cliente novo = new Cliente();
 		novo.setNome("João da Silva");
 		novo.setEmail("jsilva@gmail.com");
-		novo.setIdade(32);
+		novo.setIdade("32");
 		
 		System.out.println(novo);
 	}
