@@ -12,10 +12,18 @@ public class media {
 		
 		double media = (nota1 + nota2) / 2;
 		String avaliacao;
-		if(media <60) {
-			avaliacao = "insuficiente";
-		}else if
+		if(media <=60) {
+			avaliacao = "Insuficiente";
+		}else if(media >=61 && media <=80) {
+			avaliacao = "Satisfatoria";	
+			}else if(media >=81 && media <=90) {
+				avaliacao = "Boa";	
+				}else {
+					avaliacao="Excelente";
+				}
 		
-		JOptionPane.showMessageDialog(null,"a sua media e: " + media + " - " + avaliacao);
+		
+		
+		JOptionPane.showMessageDialog(null,"A sua media é: " + media + " - " + avaliacao);
 	}
 }
