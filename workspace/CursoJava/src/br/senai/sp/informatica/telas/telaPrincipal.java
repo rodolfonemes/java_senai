@@ -10,14 +10,14 @@ import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.Font;
 import javax.swing.JTextPane;
 import java.awt.Color;
-import javax.swing.ImageIcon;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-import javax.swing.SwingConstants;
 
 public class telaPrincipal extends JFrame {
 
@@ -53,7 +53,7 @@ public class telaPrincipal extends JFrame {
 		JButton tbBotao = new JButton("bot\u00E3o");
 		tbBotao.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-			
+		 JOptionPane.showMessageDialog(null,"teste");
 			}
 		});
 		
