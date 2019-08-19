@@ -1,0 +1,12 @@
+usuario senai java2web senha java2web132
+
+servidor senai \\192.168.3.250\java2web
+
+http://dontpad.com/java-backend-2019-ago
+
+https://gitlab.com/JSWilProf/java-backend-2019-ago
+
+https://drive.google.com/open?id=1wBzRhn   
+
+java -jar lombok.jar  // instalar o lombok
+
