@@ -4,9 +4,12 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Service;
 
+import br.senai.sp.informatica.cadastro.model.Autorizacao;
 import br.senai.sp.informatica.cadastro.model.Usuario;
+import br.senai.sp.informatica.cadastro.repo.AutorizacaoRepo;
 import br.senai.sp.informatica.cadastro.repo.UsuarioRepo;
 
 @Service
@@ -14,6 +17,10 @@ public class UsuarioService {
 
 	@Autowired
 	private UsuarioRepo repo;
+	@Autowired
+	private AutorizacaoRepo auth;
+	
+	
 	public void salvar(Usuario usuario) {
 		Usuario old_Usuario;
 		
@@ -23,6 +30,10 @@ public class UsuarioService {
 		}else {
 			old_Usuario = getUsuario(usuario.getNome());
 		}
+		
+		auth.save(new Autorizacao(usuario.getNome(),
+				usuario.isAdministrador() ? "ROLE_ADMIN" : "ROLE_USER"));
+		
 		if(old_Usuario !=null) {
 			usuario.setSenha(old_Usuario.getSenha());
 		}
@@ -50,5 +61,14 @@ public class UsuarioService {
 			return false;
 		}
 	}
+	private Autorizacao getAutorizacao(String nome) {
+		return auth.findById(nome).orElse(null);
 	}
+	public GrantedAuthority getAutorizacoes(String nome) {
+		Autorizacao autorizacao = getAutorizacao(nome);
+		
+		return autorizacao !=null? () -> autorizacao.getPerfil() : null;
+	}
+	
+}
 

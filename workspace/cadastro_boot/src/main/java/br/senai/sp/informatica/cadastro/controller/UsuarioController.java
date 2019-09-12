@@ -8,6 +8,8 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -25,6 +27,8 @@ import br.senai.sp.informatica.cadastro.service.UsuarioService;
 public class UsuarioController {
 	@Autowired
 	private UsuarioService usuarioService;
+	
+	@Secured("ROLE_ADMIN")
 	@PostMapping("/salvaUsuario")
 	public ResponseEntity<Object> salvaUsuario(@RequestBody @Valid Usuario usuario, BindingResult result) {
 		if(result.hasErrors()) {
@@ -39,10 +43,12 @@ public class UsuarioController {
 		
 		}
 	}
+	@Secured("ROLE_ADMIN")
 	@RequestMapping("/listaUsuario")
 	public ResponseEntity<List<Usuario>> listaCliente() {
 		return ResponseEntity.ok(usuarioService.getUsuarios());
 	}
+	@Secured("ROLE_ADMIN")
 	@GetMapping("editaUsuario/{nome}")
 	public ResponseEntity<Object> editaUsuario(@PathVariable("nome") String nome){
 		Usuario usuario = usuarioService.getUsuario(nome);
@@ -54,7 +60,7 @@ public class UsuarioController {
 				return ResponseEntity.notFound().build();
 			}
 	}
-	
+	@Secured("ROLE_ADMIN")
 	@PostMapping("/removeUsuario/{nome}")
 	public ResponseEntity<Object> removeUsuario(@PathVariable("nome")String nome){
 		if (usuarioService.removeUsuario(nome)) {
@@ -63,4 +69,10 @@ public class UsuarioController {
 			return ResponseEntity.unprocessableEntity().build();		
 			}
 	}
+	@Secured({"ROLE_ADMIN", "ROLE_USER"})
+	@RequestMapping("/LeAutorizacao/{nome}")
+	public ResponseEntity<GrantedAuthority> getAutorizaoes(@PathVariable("nome") String nome){
+		return ResponseEntity.ok(usuarioService.getAutorizacoes(nome));
+	}
+	
 	}
